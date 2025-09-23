@@ -2,6 +2,7 @@ from socket import socket as s
 from socket import AF_INET, SOCK_STREAM
 import logging
 from concurrent.futures import ThreadPoolExecutor
+import random
 
 class Conversation:
 	def __init__(self):
@@ -28,7 +29,7 @@ class ChatServer:
 			connected_addresses = []
 			for existing_conn in self.connections:
 				existing_conn.send(new_connection_alert.encode())
-				connected_addresses.append(existing_conn.getsockname()[0])			
+				connected_addresses.append(existing_conn.getpeername())			
 
 			welcome_message = f"\nOther users in chat:\n{connected_addresses}"
 			if len(self.connections) == 0:
@@ -45,9 +46,10 @@ class ChatServer:
 
 			self.logger.debug(f'{addr[0]} said {data.decode()}')
 
-
-			for connection in self.connections:
-				connection.send(f'{addr[0]} : \n{data.decode()}'.encode())
+			self.logger.debug(self.connections)
+			connection = random.choice(self.connections)
+			# for connection in self.connections:
+			connection.send(f'{addr[0]} : \n{data.decode()}'.encode())
 
 			if not data:
 				self.logger.warning("No data. Exiting")
@@ -68,5 +70,5 @@ class ChatServer:
 		return logger
 
 if __name__ == "__main__":
-	server = ChatServer('localhost', 8080)
+	server = ChatServer('tserver', 8080)
 	server.run()

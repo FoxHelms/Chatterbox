@@ -47,4 +47,4 @@ class ChatClient:
 
 
 if __name__ == "__main__":
-	client = ChatClient('localhost', 8080)
+	client = ChatClient('tserver', 8080)
