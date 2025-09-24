@@ -36,4 +36,5 @@ private connections.
 TO DO
 
 - [ ] Write a turn based chat app wrapper for Ollama python library
+--- okay the turn limiter is a bit better, but the logs still aren't working 
 - [ ] Implement a shared database
