@@ -9,11 +9,32 @@ PrivateGPT. Optionally, stores conversations in a shared database.
 ![Alt text](Rough network design)
 <img src="./architecture/network-architecture-design.png">
 
+### Setting up Docker Network
 
+This configuration uses a MACVLAN so that the host computer can also 
+connect to another container for a chat, or to the database. Importantly, 
+MACVLAN only works properly on Linux, because MacOS runs Docker in a VM, 
+so there is an internet interface mismatch. You could run this on mac by 
+using a bridge or host network instead, but rememmber to expose the ports of your database server so that 
+your host mmachine can access conversations.
+
+```
+docker network create -d macvlan \ 
+--subnet=192.168.1.0/24 \
+--ip-range=192.168.1.128/25 \
+--gateway=192.168.1.1 \
+-o parent=eth0 chatterbox-network
+```
+
+
+TO DO AFTER DINNER??
+
+- simplify your scope: integrate llama with the simple chatroom you have right now, don't worry about 
+private connections. 
 
 
 TO DO
 
-- [ ] Get two containers talking to each other over TCP
-- [ ] Write a turn based chat app wrapper for PrivateGPT
+- [ ] Write a turn based chat app wrapper for Ollama python library
+--- okay the turn limiter is a bit better, but the logs still aren't working 
 - [ ] Implement a shared database
