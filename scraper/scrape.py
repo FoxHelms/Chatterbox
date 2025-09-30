@@ -31,6 +31,3 @@ for i in range(1, last_page + 1):
 
 	with open('meme_links.txt', 'a') as file:
 		file.write('\n'.join(meme_links))
-
-# Look for image html element 'src' matching this format:
-# https://i.kym-cdn.com/entries/icons/newsfeed/000/055/327/4chan_pouch_gf_banner_image.jpg

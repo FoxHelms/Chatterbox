@@ -1,0 +1,32 @@
+version: "3"
+services:
+  cassandra:
+    image: cassandra:latest # Use a specific version like cassandra:4.0 for stability
+    networks:
+      coffee:
+    container_name: cassandra_node
+    ports:
+      - "9042:9042" # Expose Cassandra's CQL port
+    environment:
+      - CASSANDRA_CLUSTER_NAME=${CLUSTER_NAME}
+      - CASSANDRA_DC=datacenter1
+      - CASSANDRA_RACK=rack1
+    volumes:
+      - ./cassandra_data:${VOLUME_PATH} # Persist data outside the container
+    healthcheck:
+      test: ["CMD-SHELL", "[ $$(nodetool statusgossip) = running ]"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  server:
+    image: a8f24a6dec24
+    restart: always
+    networks:
+      coffee:
+        ipv4_address: 192.168.1.92
+networks:
+  coffee:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.1.0/24"

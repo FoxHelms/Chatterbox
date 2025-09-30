@@ -1,13 +1,22 @@
-# Chatterbox
+# --Chatterbox-- Now MemeStore
 Virtual network of chatters
 
-A local network that spins up pairs of containers to "chat" using 
-PrivateGPT. Optionally, stores conversations in a shared database. 
+A distributed meme storage solution with High Availability using 
+Cassandra. 
+
+<img src="./imgs/cassandra_memes_db.png">
+
+TODO:
+ 
+- [ ] Create a chat app where a client chooses a recipient and chooses a meme. 
+- [ ] Store chats in a container db
+
+
 
 ## DESIGN
 
-![Alt text](Rough network design)
-<img src="./architecture/network-architecture-design.png">
+![Alt text] (Rough network design)
+<img src="./imgs/network-architecture-design.png">
 
 ### Setting up Docker Network
 
@@ -25,16 +34,3 @@ docker network create -d macvlan \
 --gateway=192.168.1.1 \
 -o parent=eth0 chatterbox-network
 ```
-
-
-TO DO AFTER DINNER??
-
-- simplify your scope: integrate llama with the simple chatroom you have right now, don't worry about 
-private connections. 
-
-
-TO DO
-
-- [ ] Write a turn based chat app wrapper for Ollama python library
---- okay the turn limiter is a bit better, but the logs still aren't working 
-- [ ] Implement a shared database
