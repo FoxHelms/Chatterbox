@@ -1,5 +1,10 @@
 import requests
 import os
+from dotenv import load_dotenv()
+
+load_dotenv()
+
+MMEME_PATH = os.environ.get("MEME_PATH", "meme path not found")
 
 with open('meme_links.txt', 'r') as f:
 	memes_str = f.read()
@@ -11,7 +16,7 @@ test_link = memes_list[0]
 print(test_link)
 
 for i in range(100):
-	os.makedirs(f'/Volumes/A041/memes/{i:02d}')
+	os.makedirs(f'{MEME_PATH}/{i:02d}')
 
 print('Created subdirectories')
 
